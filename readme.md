@@ -21,6 +21,13 @@ A hash table with the following properties is returned:
 * ReleaseUrl = The URL of the new Release that was created.
 * ErrorMessage = A message describing what went wrong in the case that Succeeded is $false.
 
+## Getting a GitHub Access Token
+
+You can generate a GitHub Access Token on [your settings page][GitHubPersonalAccessTokensUrl] by following [these instructions][GitHubTutorialOnCreatingAnAccessTokenUrl].
+Be sure to give the Access Token `repo`/`public_repo` permissions so that it will be allowed to create a new Release.
+
+**Note:** You should _never_ hard-code your Access Token in your script (and source control). Instead prompt the user for it using something like `Read-Host`, and store it in an environmental variable for next time.
+
 ## Examples
 
 ```PowerShell
@@ -71,3 +78,5 @@ Once the module has been imported, you can access the the latest documention in 
 [PowerShellGalleryNuGetPackagePage]:https://www.powershellgallery.com/packages/New-GitHubRelease/
 [GitHubRepoReleasesPage]:https://github.com/deadlydog/New-GitHubRelease/releases
 [DocumentationInSourceControlFile]:https://github.com/deadlydog/New-GitHubRelease/blob/master/src/New-GitHubRelease/New-GitHubRelease.psm1#L6
+[GitHubPersonalAccessTokensUrl]:https://github.com/settings/tokens
+[GitHubTutorialOnCreatingAnAccessTokenUrl]:https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
