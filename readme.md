@@ -1,6 +1,6 @@
 # New-GitHubRelease PowerShell Module
 
-A PowerShell module to make automating the creation of new GitHub releases easy.
+A PowerShell v3 compatible module to make automating the creation of new GitHub releases easy.
 
 ## Getting Started
 
@@ -69,7 +69,6 @@ elseif ($result.AllAssetUploadsSucceeded -eq $false)
 Attempt to create a new Release on GitHub, and provide feedback to the user indicating if it succeeded or not.
 
 ---
-
 
 ## Full Documentation
 

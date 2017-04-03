@@ -12,7 +12,7 @@
 RootModule = 'New-GitHubRelease.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.0.0'
+ModuleVersion = '1.0.1'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -107,7 +107,8 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Initial release of the New-GitHubRelease module, to make automating creating new GitHub releases easy.'
+        ReleaseNotes = '- Change minimum PowerShell version to v3 to be more accurate.
+- Updated documentation a bit.'
 
     } # End of PSData hashtable
 
