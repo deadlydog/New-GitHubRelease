@@ -1,7 +1,5 @@
 #Requires -Version 2.0
 
-# To create a Github Access Token, on GitHub.com go to your account Settings -> Personal Access Tokens, and make sure the token has scope repo/public_repo.
-
 function New-GitHubRelease
 {
 <#
@@ -316,4 +314,4 @@ function Convert-HashTableToNicelyFormattedString($hashTable)
 	return $nicelyFormattedString
 }
 
-Export-ModuleMember -Function New-GitHubRelease
+Export-ModuleMember -Cmdlet New-GitHubRelease
