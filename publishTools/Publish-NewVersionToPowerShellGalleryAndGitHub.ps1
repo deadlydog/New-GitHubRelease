@@ -103,7 +103,14 @@ Replace-TextInFile -filePath $manifestFilePath -textToReplace $currentManifestRe
 Write-Output "Publishing new NuGet package to the PowerShell Gallery..."
 if (!$isTestingThisScript)
 {
-	Publish-Module -Path $moduleDirectoryPath -NuGetApiKey $PowerShellGalleryNuGetApiKey
+	try 
+	{
+		Publish-Module -Path $moduleDirectoryPath -NuGetApiKey $PowerShellGalleryNuGetApiKey
+	}
+	catch 
+	{
+		throw $_.Exception.Message
+	}
 
 	$powerShellGalleryNuGetPackageExpectedUrl = "$powerShellGalleryNuGetPackageUrlWithTrailingSlash$newVersionNumber"
 	Write-Output "PowerShell Gallery NuGet Package has been published. View it at:  $powerShellGalleryNuGetPackageExpectedUrl"
@@ -132,9 +139,9 @@ if ($gitHubReleaseCreationResult.Succeeded -eq $true)
 }
 elseif ($gitHubReleaseCreationResult.ReleaseCreationSucceeded -eq $false)
 { 
-	Write-Error "The release was not created. Error message is: $($gitHubReleaseCreationResult.ErrorMessage)"
+	throw "The release was not created. Error message is: $($gitHubReleaseCreationResult.ErrorMessage)"
 }
 elseif ($gitHubReleaseCreationResult.AllAssetUploadsSucceeded -eq $null)
 { 
-	Write-Error "The release was created, but not all of the assets were uploaded to it. View it at $($gitHubReleaseCreationResult.ReleaseUrl). Error message is: $($gitHubReleaseCreationResult.ErrorMessage)"
+	throw "The release was created, but not all of the assets were uploaded to it. View it at $($gitHubReleaseCreationResult.ReleaseUrl). Error message is: $($gitHubReleaseCreationResult.ErrorMessage)"
 }
