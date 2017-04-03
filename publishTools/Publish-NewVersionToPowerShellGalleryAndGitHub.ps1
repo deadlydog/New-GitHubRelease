@@ -118,7 +118,7 @@ $gitHubReleaseParameters =
 	ReleaseName = "$gitHubRepositoryName v" + $newVersionNumber
 	TagName = "v" + $newVersionNumber
 	ReleaseNotes = $newReleaseNotes
-	AssetFilePaths = [string[]]@($moduleFilePath, $manifestFilePath)
+	AssetFilePaths = @($moduleFilePath, $manifestFilePath)
 	IsPreRelease = $versionNumberIsAPreReleaseVersion
 	IsDraft = $isTestingThisScript
 }

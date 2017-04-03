@@ -32,7 +32,7 @@ $gitHubReleaseParameters =
     ReleaseName = "New-GitHubRelease v1.0.0"
     TagName = "v1.0.0"
     ReleaseNotes = "This release contains the following changes: ..."
-    ArtifactFilePaths = [string[]]@('C:\MyProject\Installer.exe','C:\MyProject\Documentation.md')
+    AssetFilePaths = @('C:\MyProject\Installer.exe','C:\MyProject\Documentation.md')
     IsPreRelease = $false
     IsDraft = $true	# Set to true when testing so we don't publish a real release (visible to everyone) by accident.
 }
