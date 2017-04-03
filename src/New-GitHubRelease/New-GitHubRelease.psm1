@@ -5,11 +5,11 @@ function New-GitHubRelease
 <#
 	.SYNOPSIS
 	Creates a new Release for the given GitHub repository.
-	
+
 	.DESCRIPTION
 	Uses the GitHub API to create a new Release for a given repository.
 	Allows you to specify all of the Release properties, such as the Tag, Name, Assets, and if it's a Draft or Prerelease or not.
-	
+
 	.PARAMETER GitHubUsername
 	The username that the GitHub repository exists under.
 	e.g. For the repository https://github.com/deadlydog/New-GitHubRelease, the username is 'deadlydog'.
@@ -48,8 +48,8 @@ function New-GitHubRelease
 	.PARAMETER IsPreRelease
 	True to identify the release as a prerelease. false to identify the release as a full release.
 	Default: false
-	
-	.OUTPUTS	
+
+	.OUTPUTS
 	A hash table with the following properties is returned:
 
 	Succeeded = $true if the Release was created successfully and all assets were uploaded to it, $false if some part of the process failed.
@@ -57,7 +57,7 @@ function New-GitHubRelease
 	AllAssetUploadsSucceeded = $true if all assets were uploaded to the Release successfully, $false if one of them failed, $null if there were no assets to upload.
 	ReleaseUrl = The URL of the new Release that was created.
 	ErrorMessage = A message describing what went wrong in the case that Succeeded is $false.
-	
+
 	.EXAMPLE
 	$gitHubReleaseParameters =
 	@{
@@ -72,26 +72,26 @@ function New-GitHubRelease
 		IsDraft = $true	# Set to true when testing so we don't publish a real release (visible to everyone) by accident.
 	}
 	$result = New-GitHubRelease @gitHubReleaseParameters
-	
+
 	if ($result.Succeeded -eq $true)
-	{ 
-		Write-Host "Release published successfully! View it at $($result.ReleaseUrl)"
+	{
+		Write-Output "Release published successfully! View it at $($result.ReleaseUrl)"
 	}
 	elseif ($result.ReleaseCreationSucceeded -eq $false)
-	{ 
-		Write-Host "The release was not created. Error message is: $($result.ErrorMessage)"
+	{
+		Write-Error "The release was not created. Error message is: $($result.ErrorMessage)"
 	}
 	elseif ($result.AllAssetUploadsSucceeded -eq $null)
-	{ 
-		Write-Host "The release was created, but not all of the assets were uploaded to it. View it at $($result.ReleaseUrl). Error message is: $($result.ErrorMessage)"
+	{
+		Write-Error "The release was created, but not all of the assets were uploaded to it. View it at $($result.ReleaseUrl). Error message is: $($result.ErrorMessage)"
 	}
-	
+
 	Attempts to create a new Release, and returns a hash table containing the results.
-	The PowerShell script will halt execution until the Release creation succeeds or fails.	
-	
+	The PowerShell script will halt execution until the Release creation succeeds or fails.
+
 	.LINK
 	Project home: https://github.com/deadlydog/New-GitHubRelease
-	
+
 	.NOTES
 	Name:   New-GitHubRelease
 	Author: Daniel Schroeder (originally based on the script at https://github.com/majkinetor/au/blob/master/scripts/Github-CreateRelease.ps1)
@@ -132,7 +132,7 @@ function New-GitHubRelease
 		[bool] $IsPreRelease = $false
 	)
 
-	BEGIN 
+	BEGIN
 	{
 		# Turn on Strict Mode to help catch syntax-related errors.
 		# 	This must come after a script's/function's param section.
@@ -141,8 +141,8 @@ function New-GitHubRelease
 
 		$NewLine = [Environment]::NewLine
 
-		if ([string]::IsNullOrEmpty($ReleaseName)) 
-		{ 
+		if ([string]::IsNullOrEmpty($ReleaseName))
+		{
 			$ReleaseName = $TagName
 		}
 
@@ -168,12 +168,12 @@ function New-GitHubRelease
 			$result.AllAssetUploadsSucceeded = $null
 		}
 
-		$authHeader = 
-		@{ 
+		$authHeader =
+		@{
 			Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($GitHubAccessToken + ":x-oauth-basic"))
 		}
 
-		$releaseData = 
+		$releaseData =
 		@{
 			tag_name         = $TagName
 			target_commitish = $Commitish
@@ -183,7 +183,7 @@ function New-GitHubRelease
 			prerelease       = $IsPreRelease
 		}
 
-		$createReleaseWebRequestParameters = 
+		$createReleaseWebRequestParameters =
 		@{
 			Uri         = "https://api.github.com/repos/$GitHubUsername/$GitHubRepositoryName/releases"
 			Method      = 'POST'
@@ -192,17 +192,17 @@ function New-GitHubRelease
 			Body        = (ConvertTo-Json $releaseData -Compress)
 		}
 
-		try 
+		try
 		{
 			Write-Verbose "Sending web request to create the new Release..."
 			$createReleaseWebRequestResults = Invoke-RestMethodAndThrowDescriptiveErrorOnFailure $createReleaseWebRequestParameters
 		}
-		catch 
+		catch
 		{
 			$result.ReleaseCreationSucceeded = $false
 			$result.ErrorMessage = $_.Exception.Message
 			return $result
-		}		
+		}
 
 		$result.ReleaseCreationSucceeded = $true
 		$result.ReleaseUrl = $createReleaseWebRequestResults.html_url
@@ -216,17 +216,17 @@ function New-GitHubRelease
 		# Upload Url has template parameters on the end (e.g. ".../assets{?name,label}"), so remove them.
 		[string] $urlToUploadFilesTo = $createReleaseWebRequestResults.upload_url -replace '{.+}'
 
-		try 
+		try
 		{
 			Write-Verbose "Uploading asset files to the new release..."
 			Send-FilesToGitHubRelease -filePathsToUpload $AssetFilePaths -urlToUploadFilesTo $urlToUploadFilesTo -authHeader $authHeader
 		}
-		catch 
+		catch
 		{
 			$result.AllAssetUploadsSucceeded = $false
 			$result.ErrorMessage = $_.Exception.Message
 			return $result
-		}		
+		}
 
 		$result.AllAssetUploadsSucceeded = $true
 		$result.Succeeded = $true
@@ -243,7 +243,7 @@ function Send-FilesToGitHubRelease([string[]] $filePathsToUpload, [string] $urlT
 		$filePath = $_
 		$fileName = Get-Item $filePath | Select-Object -ExpandProperty Name
 
-		$uploadAssetWebRequestParameters = 
+		$uploadAssetWebRequestParameters =
 		@{
 			# Append the name of the file to the upload url.
 			Uri         = $urlToUploadFilesTo + "?name=$fileName"
@@ -276,11 +276,11 @@ function Invoke-RestMethodAndThrowDescriptiveErrorOnFailure($requestParametersHa
 	$requestDetailsAsNicelyFormattedString = Convert-HashTableToNicelyFormattedString $requestParametersHashTable
 	Write-Verbose "Making web request with the following parameters:$NewLine$requestDetailsAsNicelyFormattedString"
 
-	try 
+	try
 	{
 		$webRequestResult = Invoke-RestMethod @requestParametersHashTable
 	}
-	catch 
+	catch
 	{
 		$exception = $_.Exception
 

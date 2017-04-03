@@ -40,15 +40,15 @@ $result = New-GitHubRelease @gitHubReleaseParameters
 
 if ($result.Succeeded -eq $true)
 {
-    Write-Host "Release published successfully! View it at $($result.ReleaseUrl)"
+    Write-Output "Release published successfully! View it at $($result.ReleaseUrl)"
 }
 elseif ($result.ReleaseCreationSucceeded -eq $false)
 {
-    Write-Host "The release was not created. Error message is: $($result.ErrorMessage)"
+    Write-Error "The release was not created. Error message is: $($result.ErrorMessage)"
 }
 elseif ($result.AllAssetUploadsSucceeded -eq $null)
 {
-    Write-Host "The release was created, but not all of the assets were uploaded to it. View it at $($result.ReleaseUrl). Error message is: $($result.ErrorMessage)"
+    Write-Error "The release was created, but not all of the assets were uploaded to it. View it at $($result.ReleaseUrl). Error message is: $($result.ErrorMessage)"
 }
 ```
 
