@@ -46,7 +46,7 @@ elseif ($result.ReleaseCreationSucceeded -eq $false)
 {
     Write-Error "The release was not created. Error message is: $($result.ErrorMessage)"
 }
-elseif ($result.AllAssetUploadsSucceeded -eq $null)
+elseif ($result.AllAssetUploadsSucceeded -eq $false)
 {
     Write-Error "The release was created, but not all of the assets were uploaded to it. View it at $($result.ReleaseUrl). Error message is: $($result.ErrorMessage)"
 }

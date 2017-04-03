@@ -141,7 +141,7 @@ elseif ($gitHubReleaseCreationResult.ReleaseCreationSucceeded -eq $false)
 { 
 	throw "The release was not created. Error message is: $($gitHubReleaseCreationResult.ErrorMessage)"
 }
-elseif ($gitHubReleaseCreationResult.AllAssetUploadsSucceeded -eq $null)
+elseif ($gitHubReleaseCreationResult.AllAssetUploadsSucceeded -eq $false)
 { 
 	throw "The release was created, but not all of the assets were uploaded to it. View it at $($gitHubReleaseCreationResult.ReleaseUrl). Error message is: $($gitHubReleaseCreationResult.ErrorMessage)"
 }
