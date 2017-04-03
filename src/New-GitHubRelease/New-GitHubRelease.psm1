@@ -238,8 +238,7 @@ function Send-FilesToGitHubRelease([string[]] $filePathsToUpload, [string] $urlT
 {
 	[int] $numberOfFilesToUpload = $filePathsToUpload.Count
 	[int] $numberOfFilesUploaded = 0
-	$filePathsToUpload | ForEach-Object
-	{
+	$filePathsToUpload | ForEach-Object {
 		$filePath = $_
 		$fileName = Get-Item $filePath | Select-Object -ExpandProperty Name
 
@@ -261,9 +260,8 @@ function Send-FilesToGitHubRelease([string[]] $filePathsToUpload, [string] $urlT
 
 function Test-AllFilePathsAndThrowErrorIfOneIsNotValid([string[]] $filePaths)
 {
-	$filePaths | ForEach-Object 
+	foreach ($filePath in $filePaths)
 	{
-		$filePath = $_
 		[bool] $filePathWasNotFound = [string]::IsNullOrEmpty($filePath) -or !(Test-Path -Path $filePath -PathType Leaf)
 		if ($filePathWasNotFound)
 		{
@@ -305,8 +303,7 @@ function Invoke-RestMethodAndThrowDescriptiveErrorOnFailure($requestParametersHa
 
 function Convert-HashTableToNicelyFormattedString($hashTable)
 {
-	[string] $nicelyFormattedString = $hashTable.Keys | ForEach-Object 
-	{
+	[string] $nicelyFormattedString = $hashTable.Keys | ForEach-Object {
 		$key = $_
 		$value = $hashTable.$key
 		"  $key = $value$NewLine"
