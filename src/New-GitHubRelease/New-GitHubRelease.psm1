@@ -1,4 +1,4 @@
-#Requires -Version 2.0
+#Requires -Version 3.0
 
 function New-GitHubRelease
 {
