@@ -29,7 +29,7 @@ $powerShellGalleryNuGetPackageUrlWithTrailingSlash = 'https://www.powershellgall
 . $commonFunctionsScriptFilePath
 
 # Use the latest version of New-GitHubRelease to publish itself to GitHub.
-Import-Module -Name $moduleFilePath
+Import-Module -Name $moduleFilePath -Force	# Use Force to make sure we always load the latest version into the session.
 
 Clear-Host
 
@@ -118,7 +118,7 @@ $gitHubReleaseParameters =
 	ReleaseName = "$gitHubRepositoryName v" + $newVersionNumber
 	TagName = "v" + $newVersionNumber
 	ReleaseNotes = $newReleaseNotes
-	ArtifactFilePaths = [string[]]@($moduleFilePath, $manifestFilePath)
+	AssetFilePaths = [string[]]@($moduleFilePath, $manifestFilePath)
 	IsPreRelease = $versionNumberIsAPreReleaseVersion
 	IsDraft = $isTestingThisScript
 }
