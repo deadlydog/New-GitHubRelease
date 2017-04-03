@@ -59,7 +59,7 @@ function New-GitHubRelease
 	ErrorMessage = A message describing what went wrong in the case that Succeeded is $false.
 
 	.EXAMPLE
-	# Import the module dynamically from the PowerShell Gallery. Use CurrentUser scope to avoid admin permissions issue.
+	# Import the module dynamically from the PowerShell Gallery. Use CurrentUser scope to avoid having to run as admin.
 	Import-Module -Name New-GitHubRelease -Scope CurrentUser
 
 	# Specify the parameters required to create the release. Do it as a hash table for easier readability.
