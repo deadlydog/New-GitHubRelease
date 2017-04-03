@@ -22,6 +22,7 @@ $moduleDirectoryPath = Join-Path $srcDirectoryPath 'New-GitHubRelease'
 $moduleFilePath = Join-Path $moduleDirectoryPath 'New-GitHubRelease.psm1'
 $manifestFilePath = Join-Path $moduleDirectoryPath 'New-GitHubRelease.psd1'
 
+$gitHubUsername = 'deadlydog'
 $gitHubRepositoryName = 'New-GitHubRelease'
 $powerShellGalleryNuGetPackageUrlWithTrailingSlash = 'https://www.powershellgallery.com/packages/New-GitHubRelease/'
 
@@ -112,7 +113,7 @@ if (!$isTestingThisScript)
 $versionNumberIsAPreReleaseVersion = $newVersionNumber -match '-+|[a-zA-Z]+' # (e.g. 1.2.3-alpha). i.e. contains a dash or letters.
 $gitHubReleaseParameters = 
 @{
-	GitHubUsername = 'deadlydog'
+	GitHubUsername = $gitHubUsername
 	GitHubRepositoryName = $gitHubRepositoryName
 	GitHubAccessToken = $GitHubAccessToken
 	ReleaseName = "$gitHubRepositoryName v" + $newVersionNumber
