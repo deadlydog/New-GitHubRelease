@@ -107,7 +107,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = 'Initial release of the New-GitHubRelease module.'
+        # ReleaseNotes = 'Initial release of the New-GitHubRelease module, to make automating creating new GitHub releases easy.'
 
     } # End of PSData hashtable
 
