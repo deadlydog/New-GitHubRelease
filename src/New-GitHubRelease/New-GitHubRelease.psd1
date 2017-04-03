@@ -24,16 +24,16 @@ GUID = 'f13a541f-3ced-4874-b1a6-ea0ec8c7dd26'
 Author = 'Dan.Schroeder'
 
 # Company or vendor of this module
-CompanyName = 'Unknown'
+# CompanyName = 'Unknown'
 
 # Copyright statement for this module
 Copyright = '(c) 2017 Dan.Schroeder. All rights reserved.'
 
 # Description of the functionality provided by this module
-# Description = 'A PowerShell module to make automating the creation of new GitHub releases easy.'
+Description = 'PowerShell module to make automating the creation of new GitHub releases easy.'
 
 # Minimum version of the Windows PowerShell engine required by this module
-# PowerShellVersion = '2.0'
+PowerShellVersion = '2.0'
 
 # Name of the Windows PowerShell host required by this module
 # PowerShellHostName = ''
@@ -95,19 +95,19 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @('New', 'GitHub', 'Release', 'New-GitHubRelease', 'Publish', 'Create', 'Deploy')
+        Tags = @('New', 'GitHub', 'Release', 'New-GitHubRelease', 'Publish', 'Create', 'Deploy')
 
         # A URL to the license for this module.
-        # LicenseUri = 'https://github.com/deadlydog/New-GitHubRelease/blob/master/license.md'
+        LicenseUri = 'https://github.com/deadlydog/New-GitHubRelease/blob/master/license.md'
 
         # A URL to the main website for this project.
-        # ProjectUri = 'https://github.com/deadlydog/New-GitHubRelease'
+        ProjectUri = 'https://github.com/deadlydog/New-GitHubRelease'
 
         # A URL to an icon representing this module.
         # IconUri = ''
 
         # ReleaseNotes of this module
-        # ReleaseNotes = 'Initial release of the New-GitHubRelease module, to make automating creating new GitHub releases easy.'
+        ReleaseNotes = 'Initial release of the New-GitHubRelease module, to make automating creating new GitHub releases easy.'
 
     } # End of PSData hashtable
 
