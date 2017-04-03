@@ -28,11 +28,11 @@ $gitHubReleaseParameters =
 @{
     GitHubUsername = 'deadlydog'
     GitHubRepositoryName = 'New-GitHubRelease'
-    GitHubAccessToken = $GitHubAccessToken
+    GitHubAccessToken = 'SomeLongHexidecimalString'
     ReleaseName = "New-GitHubRelease v1.0.0"
     TagName = "v1.0.0"
     ReleaseNotes = "This release contains the following changes: ..."
-    ArtifactFilePaths = [string[]]@($scriptFilePath, $manifestFilePath)
+    ArtifactFilePaths = [string[]]@('C:\MyProject\Installer.exe','C:\MyProject\Documentation.md')
     IsPreRelease = $false
     IsDraft = $true	# Set to true when testing so we don't publish a real release (visible to everyone) by accident.
 }
@@ -64,4 +64,4 @@ Once the module has been imported, you can access the the latest documention in 
 
 [PowerShellGalleryNuGetPackagePage]:https://www.powershellgallery.com/packages/New-GitHubRelease/
 [GitHubRepoReleasesPage]:https://github.com/deadlydog/New-GitHubRelease/releases
-[DocumentationInSourceControlFile]:https://brokenlink.com
+[DocumentationInSourceControlFile]:https://github.com/deadlydog/New-GitHubRelease/blob/master/src/New-GitHubRelease/New-GitHubRelease.psm1#L6
