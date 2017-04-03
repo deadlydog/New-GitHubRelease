@@ -77,11 +77,11 @@ function New-GitHubRelease
 	{ 
 		Write-Host "Release published successfully! View it at $($result.ReleaseUrl)"
 	}
-	else if ($result.ReleaseCreationSucceeded -eq $false)
+	elseif ($result.ReleaseCreationSucceeded -eq $false)
 	{ 
 		Write-Host "The release was not created. Error message is: $($result.ErrorMessage)"
 	}
-	else if ($result.AllAssetUploadsSucceeded -eq $null)
+	elseif ($result.AllAssetUploadsSucceeded -eq $null)
 	{ 
 		Write-Host "The release was created, but not all of the assets were uploaded to it. View it at $($result.ReleaseUrl). Error message is: $($result.ErrorMessage)"
 	}
