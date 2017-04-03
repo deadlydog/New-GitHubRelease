@@ -24,7 +24,11 @@ A hash table with the following properties is returned:
 ## Examples
 
 ```PowerShell
-$gitHubReleaseParameters =
+# Import the module dynamically from the PowerShell Gallery. Use CurrentUser scope to avoid admin permissions issue.
+Import-Module -Name New-GitHubRelease -Scope CurrentUser
+
+# Specify the parameters required to create the release. Do it as a hash table for easier readability.
+$newGitHubReleaseParameters =
 @{
     GitHubUsername = 'deadlydog'
     GitHubRepositoryName = 'New-GitHubRelease'
@@ -36,8 +40,11 @@ $gitHubReleaseParameters =
     IsPreRelease = $false
     IsDraft = $true	# Set to true when testing so we don't publish a real release (visible to everyone) by accident.
 }
-$result = New-GitHubRelease @gitHubReleaseParameters
 
+# Try to create the Release on GitHub and save the results.
+$result = New-GitHubRelease @newGitHubReleaseParameters
+
+# Provide some feedback to the user based on the results.
 if ($result.Succeeded -eq $true)
 {
     Write-Output "Release published successfully! View it at $($result.ReleaseUrl)"
@@ -52,8 +59,7 @@ elseif ($result.AllAssetUploadsSucceeded -eq $false)
 }
 ```
 
-Attempts to create a new Release, and returns a hash table containing the results.
-The PowerShell script will halt execution until the Release creation succeeds or fails.
+Attempt to create a new Release on GitHub, and provide feedback to the user indicating if it succeeded or not.
 
 ---
 
