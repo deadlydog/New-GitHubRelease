@@ -314,4 +314,4 @@ function Convert-HashTableToNicelyFormattedString($hashTable)
 	return $nicelyFormattedString
 }
 
-Export-ModuleMember -Cmdlet New-GitHubRelease
+Export-ModuleMember -Function New-GitHubRelease
