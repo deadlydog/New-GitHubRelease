@@ -145,7 +145,9 @@ function New-GitHubRelease
 		# 	Forces a function to be the first non-comment code to appear in a PowerShell Script/Module.
 		Set-StrictMode -Version Latest
 
-		$NewLine = [Environment]::NewLine
+		Set-SecurityProtocolForThread
+
+		[string] $NewLine = [Environment]::NewLine
 
 		if ([string]::IsNullOrEmpty($ReleaseName))
 		{
@@ -317,6 +319,11 @@ function Convert-HashTableToNicelyFormattedString($hashTable)
 		"  $key = $value$NewLine"
 	}
 	return $nicelyFormattedString
+}
+
+function Set-SecurityProtocolForThread
+{
+	[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12 -bor [System.Net.SecurityProtocolType]::Tls11 -bor [System.Net.SecurityProtocolType]::Tls
 }
 
 Export-ModuleMember -Function New-GitHubRelease
