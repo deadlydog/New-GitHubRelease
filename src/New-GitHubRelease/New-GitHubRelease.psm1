@@ -281,7 +281,7 @@ function Invoke-RestMethodAndThrowDescriptiveErrorOnFailure($requestParametersHa
 {
 	$requestDetailsAsNicelyFormattedString = Convert-HashTableToNicelyFormattedString $requestParametersHashTable
 	Write-Verbose "Making web request with the following parameters:$NewLine$requestDetailsAsNicelyFormattedString"
-
+	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 	try
 	{
 		$webRequestResult = Invoke-RestMethod @requestParametersHashTable
