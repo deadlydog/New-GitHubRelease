@@ -1,6 +1,16 @@
 function Publish-NewReleaseToGitHub($gitHubReleaseParameters)
 {
-	Install-Module -Name New-GitHubRelease -Scope CurrentUser -Force
+	if ($gitHubReleaseParameters.IsDraft)
+	{
+		$THIS_SCRIPTS_DIRECTORY_PATH = $PSScriptRoot
+		$pathToLocalScript = Join-Path -Path $THIS_SCRIPTS_DIRECTORY_PATH -ChildPath '..\..\src\New-GitHubRelease\New-GitHubRelease.psm1'
+		$pathToLocalScript = Resolve-Path -Path $pathToLocalScript
+		Import-Module -Name $pathToLocalScript -Force
+	}
+	else
+	{
+		Install-Module -Name New-GitHubRelease -Scope CurrentUser -Force
+	}
 
 	$gitHubAccessTokenEnvironmentalVariableName = 'GitHubAccessToken'
 	$gitHubAccessToken = $gitHubReleaseParameters.GitHubAccessToken
@@ -47,15 +57,15 @@ function Publish-NewReleaseToGitHub($gitHubReleaseParameters)
 
 	# Let the user know if the new Release was created successfully or not.
 	if ($gitHubReleaseCreationResult.Succeeded -eq $true)
-	{ 
+	{
 		Write-Output "Release published successfully! View it at $($gitHubReleaseCreationResult.ReleaseUrl)"
 	}
 	elseif ($gitHubReleaseCreationResult.ReleaseCreationSucceeded -eq $false)
-	{ 
+	{
 		throw "The release was not created. Error message is: $($gitHubReleaseCreationResult.ErrorMessage)"
 	}
 	elseif ($gitHubReleaseCreationResult.AllAssetUploadsSucceeded -eq $false)
-	{ 
+	{
 		throw "The release was created, but not all of the assets were uploaded to it. View it at $($gitHubReleaseCreationResult.ReleaseUrl). Error message is: $($gitHubReleaseCreationResult.ErrorMessage)"
 	}
 }
