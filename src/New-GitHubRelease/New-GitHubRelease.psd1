@@ -107,7 +107,8 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = '- Default to using TLS 1.2 when connecting to GitHub.'
+        ReleaseNotes = '- Default to using TLS 1.2 when connecting to GitHub.
+- Improve web request error handling.'
 
     } # End of PSData hashtable
 
