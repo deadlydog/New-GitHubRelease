@@ -290,24 +290,42 @@ function Invoke-RestMethodAndThrowDescriptiveErrorOnFailure($requestParametersHa
 	}
 	catch
 	{
-		$exception = $_.Exception
+		[Exception] $exception = $_.Exception
 
+		[string] $errorMessage = Get-RestMethodExceptionDetailsOrNull -restMethodException $exception
+		if ([string]::IsNullOrWhiteSpace($errorMessage))
+		{
+			$errorMessage = $exception.ToString()
+		}
+
+		throw "An unexpected error occurred while making web request:$NewLine$errorMessage"
+	}
+
+	Write-Verbose "Web request returned the following result:$NewLine$webRequestResult"
+	return $webRequestResult
+}
+
+function Get-RestMethodExceptionDetailsOrNull([Exception] $restMethodException)
+{
+	try
+	{
 		$responseDetails = @{
 			ResponseUri = $exception.Response.ResponseUri
 			StatusCode = $exception.Response.StatusCode
 			StatusDescription = $exception.Response.StatusDescription
 			ErrorMessage = $exception.Message
 		}
-		$responseDetailsAsNicelyFormattedString = Convert-HashTableToNicelyFormattedString $responseDetails
+		[string] $responseDetailsAsNicelyFormattedString = Convert-HashTableToNicelyFormattedString $responseDetails
 
-		$errorInfo = "Request Details:" + $NewLine + $requestDetailsAsNicelyFormattedString
+		[string] $errorInfo = "Request Details:" + $NewLine + $requestDetailsAsNicelyFormattedString
 		$errorInfo += $NewLine
 		$errorInfo += "Response Details:" + $NewLine + $responseDetailsAsNicelyFormattedString
-		throw "An unexpected error occurred while making web request: $NewLine$errorInfo"
+		return $errorInfo
 	}
-
-	Write-Verbose "Web request returned the following result:$NewLine$webRequestResult"
-	return $webRequestResult
+	catch
+	{
+		return $null
+	}
 }
 
 function Convert-HashTableToNicelyFormattedString($hashTable)
