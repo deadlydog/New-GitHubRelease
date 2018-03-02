@@ -102,7 +102,7 @@ function New-GitHubRelease
 	Name:   New-GitHubRelease
 	Author: Daniel Schroeder (originally based on the script at https://github.com/majkinetor/au/blob/master/scripts/Github-CreateRelease.ps1)
 	GitHub Release API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
-	Version: 1.0.1
+	Version: 1.0.2
 #>
 	[CmdletBinding()]
 	param
