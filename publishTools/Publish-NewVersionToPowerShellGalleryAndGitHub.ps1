@@ -19,7 +19,7 @@ $publishToPowerShellGalleryScriptFilePath = Join-Path -Path $helperScriptsDirect
 $publishToGitHubScriptFilePath = Join-Path -Path $helperScriptsDirectory -ChildPath 'Publish-NewReleaseToGitHub.ps1'
 $srcDirectoryPath = Join-Path -Path (Split-Path -Path $THIS_SCRIPTS_DIRECTORY -Parent) -ChildPath 'src'
 
-# Buid the paths to the files to modify and publish.
+# Build the paths to the files to modify and publish.
 $moduleDirectoryPath = Join-Path $srcDirectoryPath 'New-GitHubRelease'
 $moduleFilePath = Join-Path $moduleDirectoryPath 'New-GitHubRelease.psm1'
 $manifestFilePath = Join-Path $moduleDirectoryPath 'New-GitHubRelease.psd1'
@@ -81,7 +81,7 @@ $newVersionNumber = $newVersionNumber.Trim()
 
 # Prompt for the release notes for this version.
 $newReleaseNotes = Read-MultiLineInputBoxDialog -WindowTitle 'Release Notes' -Message 'What release notes should be included with this version?' -DefaultText $currentManifestReleaseNotes
-if ($newReleaseNotes -eq $null) { throw 'You cancelled out of the release notes prompt.' }
+if ($null -eq $newReleaseNotes) { throw 'You cancelled out of the release notes prompt.' }
 if ($newReleaseNotes.Contains("'"))
 {
 	$errorMessage = 'Single quotes are not allowed in the Release Notes, as they break our ability to parse them with PowerShell. Exiting script.'
